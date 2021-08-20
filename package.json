@@ -1,0 +1,15 @@
+{
+  "name": "seneca-search-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "search-test.js",
+  "scripts": {
+    "test": "./node_modules/jasmine/bin/jasmine.js --config=test/support/jasmine.json"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jasmine": "3.8.0"
+  }
+}
