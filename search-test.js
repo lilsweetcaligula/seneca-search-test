@@ -123,22 +123,23 @@ function search(args = {}) {
         ipsum: 'ipsum'
       }
 
-      seneca.act('sys:search,cmd:add', { doc }, function (err, out) {
+      seneca.act('sys:search,cmd:add', { doc }, function (err, ins) {
         if (err) {
           return done(err)
         }
 
-        Assert(out && out.ok)
+        Assert(ins && ins.ok)
 
-
-        const search_args = { query: 'lorem' }
-
-        seneca.act('sys:search,cmd:search', search_args, function (err, search) {
+        seneca.act('sys:search,cmd:search', { query: 'lorem' }, function (err, search) {
           if (err) {
             return done(err)
           }
 
           seneca.act('sys:search,cmd:remove', { id: 'aaaa' }, function (err, del) {
+            if (err) {
+              return done(err)
+            }
+
             expect(search).toEqual(jasmine.objectContaining({
               ok: true,
               data: {
