@@ -1,4 +1,5 @@
 const Assert = require('assert')
+const Uuid = require('uuid')
 
 
 function supports_add(args = {}) {
@@ -35,8 +36,10 @@ function add(args = {}) {
     it('completes without errors', done => {
       seneca.test(done)
 
+      const new_id = Uuid.v4()
+
       const new_doc = {
-        id: 'aaaa',
+        id: new_id,
         lorem: 'lorem',
         ipsum: 'ipsum'
       }
@@ -49,7 +52,7 @@ function add(args = {}) {
         expect(out).toEqual(jasmine.objectContaining({ ok: true }))
 
 
-        seneca.act('sys:search,cmd:remove', { id: 'aaaa' }, function (err, out) {
+        seneca.act('sys:search,cmd:remove', { id: new_id }, function (err, out) {
           if (err) {
             return done(err)
           }
@@ -79,8 +82,10 @@ function remove(args = {}) {
     it('completes without errors', done => {
       seneca.test(done)
 
+      const new_id = Uuid.v4()
+
       const new_doc = {
-        id: 'aaaa',
+        id: new_id,
         lorem: 'lorem',
         ipsum: 'ipsum'
       }
@@ -92,7 +97,7 @@ function remove(args = {}) {
 
         Assert(out && out.ok)
 
-        seneca.act('sys:search,cmd:remove', { id: 'aaaa' }, function (err, out) {
+        seneca.act('sys:search,cmd:remove', { id: new_id }, function (err, out) {
           if (err) {
             return done(err)
           }
@@ -117,8 +122,10 @@ function search(args = {}) {
     it('finds a document with a field equal to the value', done => {
       seneca.test(done)
 
+      const new_id = Uuid.v4()
+
       const doc = {
-        id: 'aaaa',
+        id: new_id,
         lorem: 'lorem',
         ipsum: 'ipsum'
       }
@@ -135,7 +142,7 @@ function search(args = {}) {
             return done(err)
           }
 
-          seneca.act('sys:search,cmd:remove', { id: 'aaaa' }, function (err, del) {
+          seneca.act('sys:search,cmd:remove', { id: new_id }, function (err, del) {
             if (err) {
               return done(err)
             }
@@ -144,7 +151,14 @@ function search(args = {}) {
               ok: true,
               data: {
                 hits: [
-                  { id: 'aaaa', doc }
+                  {
+                    id: new_id,
+
+                    doc: {
+                      lorem: 'lorem',
+                      ipsum: 'ipsum'
+                    }
+                  }
                 ]
               }
             }))
