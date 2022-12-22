@@ -3,3 +3,10 @@ node_modules/
 # Coverage directory used by tools like istanbul
 coverage
 *.lcov
+
+
+yarn-debug.log*
+yarn-error.log*
+
+package-lock.json
+yarn.lock
